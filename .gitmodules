@@ -1,0 +1,3 @@
+[submodule "legalaid_backend"]
+	path = legalaid_backend
+	url = https://github.com/GTiplie/legalaid-backend.git
