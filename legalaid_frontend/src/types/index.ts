@@ -4,10 +4,12 @@ export interface SituationRequest {
 }
 
 export interface LegalResponse {
-  response: string;
-  consultations_remaining: number;
-  articles_cited: string[];
+  request_id: string;
+  situation: string;
+  analyse: string;
   processing_time: number;
+  timestamp: string;
+  disclaimer: string;
 }
 
 export interface ConsultationStatus {
@@ -20,9 +22,9 @@ export interface ConsultationStatus {
 
 export interface HealthResponse {
   status: string;
-  rag_initialized: boolean;
-  documents_loaded: number;
   version: string;
+  vectorstore_ready: boolean;
+  pdf_available: boolean;
 }
 
 export type AppError =

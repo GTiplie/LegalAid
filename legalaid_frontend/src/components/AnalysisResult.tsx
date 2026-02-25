@@ -58,56 +58,24 @@ function renderInline(text: string): React.ReactNode {
   });
 }
 
-function extractDisclaimer(text: string): { body: string; disclaimer: string | null } {
-  const disclaimerKeywords = [
-    'avertissement',
-    'mise en garde',
-    'disclaimer',
-    'ces informations ne constituent pas',
-    'cet avis ne remplace pas',
-    'consultez un avocat',
-    'à titre informatif seulement',
-  ];
-
-  const lines = text.split('\n');
-  const disclaimerStartIndex = lines.findIndex((line) =>
-    disclaimerKeywords.some((kw) => line.toLowerCase().includes(kw))
-  );
-
-  if (disclaimerStartIndex === -1) return { body: text, disclaimer: null };
-
-  const body = lines.slice(0, disclaimerStartIndex).join('\n').trim();
-  const disclaimer = lines.slice(disclaimerStartIndex).join('\n').trim();
-  return { body, disclaimer };
-}
-
 export default function AnalysisResult({ result, onReset }: Props) {
-  const { body, disclaimer } = extractDisclaimer(result.response);
-
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
         <h2 className="text-base font-semibold text-slate-800">Résultat de l'analyse</h2>
         <span className="text-xs text-slate-400">
-          {result.processing_time.toFixed(1)}s · {result.articles_cited.length} article(s) cité(s)
+          {result.processing_time.toFixed(1)}s
         </span>
       </div>
 
       <div className="bg-white border border-slate-200 rounded-lg p-4 shadow-sm">
-        {formatResponse(body)}
+        {formatResponse(result.analyse)}
       </div>
 
-      {disclaimer && (
+      {result.disclaimer && (
         <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 flex gap-3">
           <span className="text-amber-500 text-lg leading-none mt-0.5">⚠️</span>
-          <p className="text-sm text-amber-800 leading-relaxed">{disclaimer}</p>
-        </div>
-      )}
-
-      {result.articles_cited.length > 0 && (
-        <div className="text-xs text-slate-400">
-          <span className="font-medium text-slate-500">Articles cités : </span>
-          {result.articles_cited.join(', ')}
+          <p className="text-sm text-amber-800 leading-relaxed">{result.disclaimer}</p>
         </div>
       )}
 

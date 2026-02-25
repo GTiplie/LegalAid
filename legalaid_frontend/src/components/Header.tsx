@@ -6,7 +6,7 @@ export default function Header() {
 
   useEffect(() => {
     checkHealth()
-      .then((h) => setHealthy(h.status === 'healthy' || h.rag_initialized))
+      .then((h) => setHealthy(h.status === 'healthy' || h.vectorstore_ready))
       .catch(() => setHealthy(false));
   }, []);
 
